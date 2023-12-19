@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Line Combination Generator</title>
+  <p>created by <a href="https://t.me/Securi3yTalent"><span  style=" color: red; text-decoration: none;">Securi3yTalent</span></a></p>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    .input-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .input-container textarea {
+      width: 48%;
+    }
+
+    .input-container textarea:first-child {
+      margin-right: 2%;
+    }
+
+    .generate-btn, .copy-btn {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .output {
+      width: 100%;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Line Combination Generator</h2>
+
+  <div class="input-container">
+    <textarea id="inputLines" placeholder="Enter lines for Input Dork"></textarea>
+    <textarea id="inputLines2" placeholder="Enter lines for Input keyword"></textarea>
+  </div>
+  <button class="generate-btn" onclick="generateCombinations()">Generate Combinations</button>
+  <button class="copy-btn" onclick="copyToClipboard()">Copy to Clipboard</button>
+  <div id="output" class="output"></div>
+
+  <script>
+    function generateCombinations() {
+      const inputLines = document.getElementById('inputLines').value.split('\n').filter(line => line.trim() !== '');
+      const inputLines2 = document.getElementById('inputLines2').value.split('\n').filter(line => line.trim() !== '');
+
+      const combinations = generateCombinedLineCombinations(inputLines, inputLines2);
+
+      displayCombinations(combinations);
+    }
+
+    function generateCombinedLineCombinations(lines1, lines2) {
+      let result = [];
+
+      for (let i = 0; i < lines1.length; i++) {
+        for (let j = 0; j < lines2.length; j++) {
+          result.push([lines1[i], lines2[j]]);
+        }
+      }
+
+      return result;
+    }
+
+    function displayCombinations(combinations) {
+      const outputDiv = document.getElementById('output');
+      outputDiv.innerHTML = '';
+
+      combinations.forEach(combination => {
+        const combinationDiv = document.createElement('div');
+        combinationDiv.textContent = combination.join('');
+        outputDiv.appendChild(combinationDiv);
+      });
+    }
+
+    function copyToClipboard() {
+      const outputText = document.getElementById('output').innerText;
+      const textArea = document.createElement('textarea');
+      textArea.value = outputText;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      alert('Copied to clipboard!');
+    }
+  </script>
+</body>
+</html>
