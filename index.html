@@ -26,7 +26,7 @@
       margin-right: 2%;
     }
 
-    .generate-btn, .copy-btn {
+    .generate-btn, .copy-btn, .save-btn {
       padding: 10px;
       cursor: pointer;
     }
@@ -42,10 +42,11 @@
 
   <div class="input-container">
     <textarea id="inputLines" placeholder="Enter lines for Input Dork"></textarea>
-    <textarea id="inputLines2" placeholder="Enter lines for Input keyword"></textarea>
+    <textarea id="inputLines2" placeholder="Enter lines for Input Input keyword"></textarea>
   </div>
   <button class="generate-btn" onclick="generateCombinations()">Generate Combinations</button>
   <button class="copy-btn" onclick="copyToClipboard()">Copy to Clipboard</button>
+  <button class="save-btn" onclick="saveToFile()">Save to File</button>
   <div id="output" class="output"></div>
 
   <script>
@@ -76,7 +77,7 @@
 
       combinations.forEach(combination => {
         const combinationDiv = document.createElement('div');
-        combinationDiv.textContent = combination.join('');
+        combinationDiv.textContent = combination.join(' | ');
         outputDiv.appendChild(combinationDiv);
       });
     }
@@ -90,6 +91,17 @@
       document.execCommand('copy');
       document.body.removeChild(textArea);
       alert('Copied to clipboard!');
+    }
+
+    function saveToFile() {
+      const outputText = document.getElementById('output').innerText;
+      const blob = new Blob([outputText], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'Securi3yTalent.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
   </script>
 </body>
